@@ -81,70 +81,43 @@
             return resultado;
         }
 
-        function traslacion(matrizTrasl, vo) {
-            vt = strarr2num(byId("matrizTrasl"), ","||"T");
-            var tx = matrizTral[0];
-            var ty = matrizTral[1];
-            var tz = matrizTral[2];
+        function traslacion(p1, t1) {
 
-            matrizTrasl = matrizTraslacion(tx, ty, tz);
-            vo.push(1);
-            var resultado = multiplicarMatrizVector(matrizTrasl, vo);
+            for(i=0;i<3;i++)
+            {
+                t2[i]+=Number(p1[i]);
+            }
+		
+		return arreglo2;	
+	}
+
+        function escalado(p1, t1) {
+            
+            var sx1 = t1[1];
+            var sy1 = t1[2];
+            var sz1 = t1[3];
+
+            var matrizEscal = matrizEscalado(sx1, sy1, sz1);
+            p1.push(1);
+            var resultado = multiplicarMatrizVector(matrizEscal, p1);
 
             document.getElementById("vr_tr").value = resultado.slice(0, 3).join(", ");
-
-			alert(`Coordenadas trasladadas en p1: (${resultado.slice(0, 3).join(", ")},`);
-            alert(`Coordenadas trasladadas en p2: (${translatedX2}, ${translatedY2}, ${translatedZ2})`);
-        }
-
-        function escalado() {
-            var p1 = document.getElementById("p1").value.split(',').map(parseFloat);
-            var p2 = document.getElementById("p2").value.split(',').map(parseFloat);
-            
-			const vectorTraslacion = document.getElementById("ti").value.split(',').map(parseFloat);
-
-
-			const X1 = p1[0];
-			const Y1 = p1[1];
-			const Z1 = p1[2];
-
-            const X2 = p2[0];
-			const Y2 = p2[1];
-			const Z2 = p2[2];
-
-
-			const X = coordenadaInicial[0];
-			const Y = coordenadaInicial[1];
-			const Z = coordenadaInicial[2];
-
-			// Coordenadas de escalado P1
-			const escaladoX = vectorTraslacion[0];
-			const escaladoY = vectorTraslacion[1];
-			const escaladoZ = vectorTraslacion[2];
-            
-
-			// Las coordenadas trasladadas son las primeras tres componentes del resultado
-			const escaleX1 = X * escaladoX;
-			const escaleY1 = Y * escaladoY;
-			const escaleZ1 = Y * escaladoZ;
-
-            // Las coordenadas trasladadas son las primeras tres componentes del resultado
-			const escaleX2 = X * escaladoX;
-			const escaleY2 = Y * escaladoY;
-			const escaleZ2 = Y * escaladoZ;
-
-			alert(`Coordenadas escaladas en p1: (${escaleX1}, ${escaleY1}, ${escaleZ1})`);
-            alert(`Coordenadas escaladas en p2: (${escaleX2}, ${escaleY2}, ${escaleZ2})`);
         }
         function Transformaciones()
         {
-            p1 = document.getElementById("p1").value.split(',').map(parseFloat);
-            p2 = document.getElementById("p2").value.split(',').map(parseFloat);
-            t1 = document.getElementById("ti").value;
-            t2 = document.getElementById("tf").value.split(',').map(parseFloat);
+            p1 = strarr2num(byId("p1"), ",");
+            p2 = strarr2num(byId("p2"), ",");
+            t1 = strarr2num(byId("ti"), "," );
+            t2 = strarr2num(byId("tf"), ",");
 
-            if( t1 === `T`){
-                traslacion("t1", p1)
+            if( t1[0]=='T'){
+                return traslacion(p1, t1)
+            }
+            else if (t1[0]=='E'){
+                return escalado(p1, t1)
+            }
+            else if (t1 === `R`){
+                escalado(p1, t1)
             }
 
         }
@@ -186,6 +159,10 @@
         <input id="tf" size="10"> <!-- Traslación en X -->
     </p>
     <button id="btn_tr" onclick="Transformaciones()">Procesar</button>
+
+    <p>Vector Resultante (Traslación)
+        <input id="vr_tr" size="20"> <!-- Vector resultante (Traslación) -->
+    </p>
 
 </body>
 </html>
