@@ -82,53 +82,84 @@
         }
 
         function traslacion() {
-            const coordenadaInicial = document.getElementById("p1").value.split(',').map(parseFloat);
+            var p1 = document.getElementById("p1").value.split(',').map(parseFloat);
+            var p2 = document.getElementById("p2").value.split(',').map(parseFloat);
+            
 			const vectorTraslacion = document.getElementById("ti").value.split(',').map(parseFloat);
+
+
+			const X1 = p1[0];
+			const Y1 = p1[1];
+			const Z1 = p1[2];
+
+            const X2 = p2[0];
+			const Y2 = p2[1];
+			const Z2 = p2[2];
+
+			// Coordenadas de traslación
+			const translationX = vectorTraslacion[0];
+			const translationY = vectorTraslacion[1];
+			const translationZ = vectorTraslacion[2];
+
+			// Las coordenadas trasladadas son las primeras tres componentes del resultado
+			const translatedX1 = X1 + translationX;
+			const translatedY1 = Y1 + translationY;
+			const translatedZ1 = Z1 + translationZ;
+
+            const translatedX2 = X2 + translationX;
+			const translatedY2 = Y2 + translationY;
+			const translatedZ2 = Z2 + translationZ;
+
+			alert(`Coordenadas trasladadas en p1: (${translatedX1}, ${translatedY1}, ${translatedZ1})`);
+            alert(`Coordenadas trasladadas en p2: (${translatedX2}, ${translatedY2}, ${translatedZ2})`);
+        }
+
+        function escalado() {
+            var p1 = document.getElementById("p1").value.split(',').map(parseFloat);
+            var p2 = document.getElementById("p2").value.split(',').map(parseFloat);
+            
+			const vectorTraslacion = document.getElementById("ti").value.split(',').map(parseFloat);
+
+
+			const X1 = p1[0];
+			const Y1 = p1[1];
+			const Z1 = p1[2];
+
+            const X2 = p2[0];
+			const Y2 = p2[1];
+			const Z2 = p2[2];
 
 
 			const X = coordenadaInicial[0];
 			const Y = coordenadaInicial[1];
 			const Z = coordenadaInicial[2];
 
-			// Coordenadas de traslación
-			const translationX = vectorTraslacion[1];
-			const translationY = vectorTraslacion[2];
-			const translationZ = vectorTraslacion[3];
+			// Coordenadas de escalado P1
+			const escaladoX = vectorTraslacion[0];
+			const escaladoY = vectorTraslacion[1];
+			const escaladoZ = vectorTraslacion[2];
+            
 
 			// Las coordenadas trasladadas son las primeras tres componentes del resultado
-			const translatedX = X + translationX;
-			const translatedY = Y + translationY;
-			const translatedZ = Y + translationZ;
+			const escaleX1 = X * escaladoX;
+			const escaleY1 = Y * escaladoY;
+			const escaleZ1 = Y * escaladoZ;
 
-			alert(`Coordenadas trasladadas: (${translatedX}, ${translatedY}, ${translatedZ})`);
+            // Las coordenadas trasladadas son las primeras tres componentes del resultado
+			const escaleX2 = X * escaladoX;
+			const escaleY2 = Y * escaladoY;
+			const escaleZ2 = Y * escaladoZ;
+
+			alert(`Coordenadas escaladas en p1: (${escaleX1}, ${escaleY1}, ${escaleZ1})`);
+            alert(`Coordenadas escaladas en p2: (${escaleX2}, ${escaleY2}, ${escaleZ2})`);
         }
-
-        function escalado() {
-            var voe = strarr2num(byId("voe"), ",");
-            var sx = parseFloat(byId("sx"));
-            var sy = parseFloat(byId("sy"));
-            var sz = parseFloat(byId("sz"));
-
-            var matrizEscal = matrizEscalado(sx, sy, sz);
-            voe.push(1);
-            var resultado = multiplicarMatrizVector(matrizEscal, voe);
-
-            document.getElementById("vr_sc").value = resultado.slice(0, 3).join(", ");
-        }
-        function Transformacion1()
+        function Transformaciones()
         {
-			var vectorTraslacion = document.getElementById("ti").value.split(',').map(parseFloat);
-            transformacion = vectorTraslacion[0]
-            if (transformacion = "T")
-            {
-                traslacion();
-            }
-            else if(ti = "R")
-            {
-                rotacion();
-            }
+            transformacion1 = document.getElementById("ti").value.split(',').map(parseFloat);
+            transformacion2 = document.getElementById("tf").value.split(',').map(parseFloat);
 
         }
+
         function rotacion() {
             const coordenadaInicial = document.getElementById("p1").value.split(',').map(parseFloat);
 			const vectorTraslacion = document.getElementById("ti").value.split(',').map(parseFloat);
