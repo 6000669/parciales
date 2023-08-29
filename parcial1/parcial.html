@@ -81,36 +81,19 @@
             return resultado;
         }
 
-        function traslacion() {
-            var p1 = document.getElementById("p1").value.split(',').map(parseFloat);
-            var p2 = document.getElementById("p2").value.split(',').map(parseFloat);
-            
-			const vectorTraslacion = document.getElementById("ti").value.split(',').map(parseFloat);
+        function traslacion(matrizTrasl, vo) {
+            vt = strarr2num(byId("matrizTrasl"), ","||"T");
+            var tx = matrizTral[0];
+            var ty = matrizTral[1];
+            var tz = matrizTral[2];
 
+            matrizTrasl = matrizTraslacion(tx, ty, tz);
+            vo.push(1);
+            var resultado = multiplicarMatrizVector(matrizTrasl, vo);
 
-			const X1 = p1[0];
-			const Y1 = p1[1];
-			const Z1 = p1[2];
+            document.getElementById("vr_tr").value = resultado.slice(0, 3).join(", ");
 
-            const X2 = p2[0];
-			const Y2 = p2[1];
-			const Z2 = p2[2];
-
-			// Coordenadas de traslación
-			const translationX = vectorTraslacion[0];
-			const translationY = vectorTraslacion[1];
-			const translationZ = vectorTraslacion[2];
-
-			// Las coordenadas trasladadas son las primeras tres componentes del resultado
-			const translatedX1 = X1 + translationX;
-			const translatedY1 = Y1 + translationY;
-			const translatedZ1 = Z1 + translationZ;
-
-            const translatedX2 = X2 + translationX;
-			const translatedY2 = Y2 + translationY;
-			const translatedZ2 = Z2 + translationZ;
-
-			alert(`Coordenadas trasladadas en p1: (${translatedX1}, ${translatedY1}, ${translatedZ1})`);
+			alert(`Coordenadas trasladadas en p1: (${resultado.slice(0, 3).join(", ")},`);
             alert(`Coordenadas trasladadas en p2: (${translatedX2}, ${translatedY2}, ${translatedZ2})`);
         }
 
@@ -155,8 +138,14 @@
         }
         function Transformaciones()
         {
-            transformacion1 = document.getElementById("ti").value.split(',').map(parseFloat);
-            transformacion2 = document.getElementById("tf").value.split(',').map(parseFloat);
+            p1 = document.getElementById("p1").value.split(',').map(parseFloat);
+            p2 = document.getElementById("p2").value.split(',').map(parseFloat);
+            t1 = document.getElementById("ti").value;
+            t2 = document.getElementById("tf").value.split(',').map(parseFloat);
+
+            if( t1 === `T`){
+                traslacion("t1", p1)
+            }
 
         }
 
@@ -196,7 +185,7 @@
     <p>Trasformacion final
         <input id="tf" size="10"> <!-- Traslación en X -->
     </p>
-    <button id="btn_tr" onclick="Transformacion1()">Procesar</button>
+    <button id="btn_tr" onclick="Transformaciones()">Procesar</button>
 
 </body>
 </html>
