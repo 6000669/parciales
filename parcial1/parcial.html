@@ -81,17 +81,22 @@
             return resultado;
         }
 
-        function traslacion(p1, t1) {
+        function traslacion(p1, p2, t1) {
 
-            for(i=0;i<3;i++)
-            {
-                t2[i]+=Number(p1[i]);
-            }
-		
-		return arreglo2;	
-	}
+            var tx = t1[1];
+            var ty = t1[2];
+            var tz = t1[3];
 
-        function escalado(p1, t1) {
+            var matrizTrasl = matrizTraslacion(tx, ty, tz);
+            p1.push(1);
+            var resultado1 = multiplicarMatrizVector(matrizTrasl, p1);
+            var resultado2 = multiplicarMatrizVector(matrizTrasl, p2);
+
+            document.getElementById("t_p1").value = resultado1.slice(0, 3).join(", ");
+            document.getElementById("t_p2").value = resultado2.slice(0, 3).join(", ");
+        }
+
+        function escalado(p1, p2, t1) {
             
             var sx1 = t1[1];
             var sy1 = t1[2];
@@ -99,25 +104,37 @@
 
             var matrizEscal = matrizEscalado(sx1, sy1, sz1);
             p1.push(1);
-            var resultado = multiplicarMatrizVector(matrizEscal, p1);
+            var resultado1 = multiplicarMatrizVector(matrizEscal, p1);
+            var resultado2 = multiplicarMatrizVector(matrizEscal, p2);
 
-            document.getElementById("vr_tr").value = resultado.slice(0, 3).join(", ");
+            document.getElementById("t_p1").value = resultado1.slice(0, 3).join(", ");
+            document.getElementById("t_p2").value = resultado2.slice(0, 3).join(", ");
         }
         function Transformaciones()
         {
             p1 = strarr2num(byId("p1"), ",");
             p2 = strarr2num(byId("p2"), ",");
-            t1 = strarr2num(byId("ti"), "," );
+            t1 = strarr2num(byId("ti"), ",");
             t2 = strarr2num(byId("tf"), ",");
 
-            if( t1[0]=='T'){
-                return traslacion(p1, t1)
+            if( "t1".includes(T)){
+               traslacion(p1, p2, t1)
             }
             else if (t1[0]=='E'){
-                return escalado(p1, t1)
+                return escalado(p1, p2, t1)
             }
-            else if (t1 === `R`){
-                escalado(p1, t1)
+            else if (t1[0] == `R`){
+                return rotacion(p1, p2, t1)
+            }
+
+            if( t2[0]=='T'){
+                return traslacion(p1, p2, t2)
+            }
+            else if (t2[0]=='E'){
+                return escalado(p1, p2, t2)
+            }
+            else if (t2[0] == `R`){
+                return rotacion(p1, p2, t2)
             }
 
         }
@@ -158,11 +175,15 @@
     <p>Trasformacion final
         <input id="tf" size="10"> <!-- Traslación en X -->
     </p>
+    <p>Transformacion en p1
+        <input id="t_p1" size="20"> <!-- Vector resultante (Traslación) -->
+    </p>
+    <p>Transformacion en p2
+        <input id="t_p2" size="20"> <!-- Vector resultante (Traslación) -->
+    </p>
     <button id="btn_tr" onclick="Transformaciones()">Procesar</button>
 
-    <p>Vector Resultante (Traslación)
-        <input id="vr_tr" size="20"> <!-- Vector resultante (Traslación) -->
-    </p>
+    
 
 </body>
 </html>
